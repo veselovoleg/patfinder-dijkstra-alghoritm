@@ -18,10 +18,10 @@ class Graph {
 
     showEdges() {
         for (let key in this.adjacencyList) {
-            let [n1, n2] = this.adjacencyList[key];
-            console.log(`Node: ${key}
-            Node: ${ n1.node}, weight: ${n1.weight}    
-            Node: ${ n2.node}, weight: ${n2.weight}`);
+            console.log(`Node: ${key}`)
+            this.adjacencyList[key].forEach((item, index) => {
+                console.log(`Neighbor #${ index + 1 } Node: ${item.node}, weight: ${item.weight}`);
+            });
         }
     }
 
@@ -36,24 +36,27 @@ class Graph {
                 .map(item => item.weight));
             currentNode = this.adjacencyList[currentNode].filter(node => node.weight === min)[0].node;
             traversedWeights.push(min);
-    
+
             if (currentNode === endNode) visitedNodes.push(currentNode), ended = true;
         }
 
         let path = visitedNodes.map((node, index) => ([node, traversedWeights[index] ? traversedWeights[index] : ''])).flat();
         path.pop();
-        console.log(`Path: ${ path.join(' => ')} \nFullWeight = ${ traversedWeights.reduce((A, I) => A + I)}`);
+        console.log(`Path: ${path.join(' => ')} \nFullWeight = ${traversedWeights.reduce((A, I) => A + I)}`);
     }
 };
 
 let map = new Graph();
-map.addNode('A', 'B', 'C', 'D');
+map.addNode('A', 'B', 'C', 'D', 'E', 'G');
 map.addEdge('A', 'B', 4);
 map.addEdge('A', 'C', 9);
 map.addEdge('C', 'D', 2);
 map.addEdge('B', 'D', 6);
-//map.addEdge('D', 'E', 1);
+map.addEdge('D', 'E', 1);
+map.addEdge('B', 'E', 2);
+map.addEdge('E', 'G', 3);
+map.addEdge('C', 'G', 15);
 
 map.showEdges();
 
-map.findPaths('A', 'D');
+map.findPaths('A', 'G');
