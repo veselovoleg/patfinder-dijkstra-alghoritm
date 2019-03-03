@@ -20,7 +20,7 @@ class Graph {
         for (let key in this.adjacencyList) {
             console.log(`Node: ${key}`)
             this.adjacencyList[key].forEach((item, index) => {
-                console.log(`Neighbor #${ index + 1 } Node: ${item.node}, weight: ${item.weight}`);
+                console.log(`Neighbor #${index + 1} Node: ${item.node}, weight: ${item.weight}`);
             });
         }
     }
@@ -40,8 +40,9 @@ class Graph {
             if (currentNode === endNode) visitedNodes.push(currentNode), ended = true;
         }
 
-        let path = visitedNodes.map((node, index) => ([node, traversedWeights[index] ? traversedWeights[index] : ''])).flat();
-        path.pop();
+        let path = visitedNodes.map((node, index) => ([node, traversedWeights[index] ? traversedWeights[index] : '']))
+            .flat()
+            .slice(0, -1);
         console.log(`Path: ${path.join(' => ')} \nFullWeight = ${traversedWeights.reduce((A, I) => A + I)}`);
     }
 };
